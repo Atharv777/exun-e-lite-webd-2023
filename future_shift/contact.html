@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <title>Contact - Future Shift</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="main-container">
+        <header>
+            <div>
+                <h1><a href="index.html">FutureShift</a></h1>
+                <p><a href="index.html">Planting seeds of sustainability for a brighter future.</a></p>
+            </div>
+
+            <button class="btn">SignUp</button>
+        </header>
+
+        <form id="form">
+            <div class="inp-group">
+                <label for="name">Name:</label>
+                <input type="text" name="name" placeholder="Atharv Varshney">
+            </div>
+            <div class="inp-group">
+                <label for="mailID">E-Mail ID:</label>
+                <input type="email" name="mailID" placeholder="xyzfoundation@gmail.com">
+            </div>
+            <div class="inp-group">
+                <label for="orgName">Organization Name:</label>
+                <input type="text" name="orgName" placeholder="XYZ Foundation">
+            </div>
+            <div class="inp-group">
+                <label for="twitter">Subject:</label>
+                <input type="text" name="subject" placeholder="Lorem ipsum dolor sit amet consectetur adipisicing.">
+            </div>
+            <div class="inp-group">
+                <label for="country">Message/Query:</label>
+                <textarea type="text" name="msg"
+                    placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam esse architecto voluptatibus natus? Animi distinctio iusto maiores earum illum quo harum facilis error a eaque."></textarea>
+            </div>
+            <button type="submit">
+                Submit
+            </button>
+        </form>
+
+
+
+        <section id="footer">
+            <footer>
+                <div>
+                    <h1>FutureShift</h1>
+                    <p>Planting seeds of sustainability for a brighter future.</p>
+                </div>
+                <p>FutureShift &#169; All Rights Reserved 2023</p>
+            </footer>
+        </section>
+
+    </div>
+</body>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script type="module">
+    AOS.init({ duration: 1200 });
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBjyRFwkXLpXVpekwhI4bkzBCTamoVno40",
+        authDomain: "future-shift-exun-e-lite-2023.firebaseapp.com",
+        projectId: "future-shift-exun-e-lite-2023",
+        storageBucket: "future-shift-exun-e-lite-2023.appspot.com",
+        messagingSenderId: "920678212161",
+        appId: "1:920678212161:web:30954962a45ccc902edcc0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    document.getElementById('form')
+        .addEventListener('submit', submitForm);
+
+    function submitForm(e) {
+        e.preventDefault();
+
+        var name = document.querySelector('input[name="name"]').value;
+        var mailID = document.querySelector('input[name="mailID"]').value;
+        var orgName = document.querySelector('input[name="orgName"]').value;
+        var subject = document.querySelector('input[name="subject"]').value;
+        var msg = document.querySelector('textarea[name="msg"]').value;
+
+        store(name, mailID, orgName, subject, msg);
+        document.getElementById('form').reset();
+    }
+
+    async function store(name, mailID, orgName, subject, msg) {
+        try {
+            const docRef = await addDoc(collection(db, "contact"), {
+                name: name,
+                emailID: mailID,
+                organizationName: orgName,
+                subject: subject,
+                msg: msg
+            });
+            alert("Response saved! Our team will revert back shortly.")
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
+
+    }
+</script>
+
+</html>
