@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Club</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h1>Tech Club</h1>
+
+    <form id="form">
+        <div class="inp-group">
+            <label for="name">Name:</label>
+            <input required type="text" name="name" placeholder="Atharv Varshney" minlength="3">
+        </div>
+        <div class="inp-group">
+            <label for="mailID">E-Mail ID:</label>
+            <input required type="email" name="mailID" placeholder="atharv@xyz.com">
+        </div>
+        <div class="inp-group">
+            <label for="dob">Date of birth:</label>
+            <input required type="date" name="dob" min="2004-01-01">
+        </div>
+        <div class="inp-group">
+            <label for="about">Tell us about yourself?</label>
+            <textarea required type="text" name="about"
+                placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam esse architecto voluptatibus natus? Animi distinctio iusto maiores earum illum quo harum facilis error a eaque."></textarea>
+        </div>
+        <div class="inp-group">
+            <label for="achievements">Achievements? If yes, please describe them.</label>
+            <textarea required type="text" name="achievements"
+                placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam esse architecto voluptatibus natus? Animi distinctio iusto maiores earum illum quo harum facilis error a eaque."></textarea>
+        </div>
+        <div class="inp-group">
+            <label for="grade">Grade:</label>
+            <select required name="grade">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+        </div>
+        <div class="inp-group">
+            <p>Would you like to receive notifications?</p>
+            <div>
+                <input type="radio" name="notif" value="true">
+                <label for="notif">Yes</label>
+            </div>
+            <div>
+                <input type="radio" name="notif" value="false">
+                <label for="notif">No</label>
+            </div>
+        </div>
+        <button type="submit">
+            Submit
+        </button>
+    </form>
+</body>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBjyRFwkXLpXVpekwhI4bkzBCTamoVno40",
+        authDomain: "future-shift-exun-e-lite-2023.firebaseapp.com",
+        projectId: "future-shift-exun-e-lite-2023",
+        storageBucket: "future-shift-exun-e-lite-2023.appspot.com",
+        messagingSenderId: "920678212161",
+        appId: "1:920678212161:web:025fa03c8fb9991e2edcc0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    function submitForm(e) {
+        e.preventDefault();
+
+        const name = document.querySelector('input[name="name"]').value;
+        const mailID = document.querySelector('input[name="mailID"]').value;
+        const dob = document.querySelector('input[name="dob"]').value;
+        const about = document.querySelector('textarea[name="about"]').value;
+        const achievements = document.querySelector('textarea[name="achievements"]').value;
+        const grade = document.querySelector('select[name="grade"]').value;
+        const notif = document.querySelector('input[name="notif"]:checked').value;
+        const boolNotif = notif === "true" ? true : false
+
+        if (!name.length || !mailID.length || !dob.length || !about.length || !achievements.length) {
+            alert("All fields are mandatory")
+        }
+        if (name.length < 3) {
+            alert("Your name should be at least 3 characters long")
+            return
+        }
+
+        alert(`Your name: ${name}`)
+        alert(`You E-mail: ${mailID}`)
+        alert(`Your DOB: ${dob}`)
+        alert(`About: ${about}`)
+        alert(`Achievements: ${achievements}`)
+        alert(`Grade: ${grade}`)
+        alert(`You${boolNotif ? "" : " don't"} want to receive notifications`)
+
+        store(
+            name,
+            mailID,
+            dob,
+            about,
+            achievements,
+            grade,
+            boolNotif
+        );
+        document.getElementById('form').reset();
+    }
+
+    async function store(name, mailID, dob, about, achievements, grade, boolNotif) {
+        try {
+            const docRef = await addDoc(collection(db, "memberRequests"), {
+                name: name,
+                emailID: mailID,
+                DateOfBirth: dob,
+                about: about,
+                achievements: achievements,
+                grade: grade,
+                wantNotifications: boolNotif
+            });
+            alert("Response saved!")
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
+
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelector('input[name="dob"]').max = new Date().toISOString().split("T")[0];
+
+        document.getElementById('form')
+            .addEventListener('submit', submitForm);
+    })
+</script>
+
+</html>
