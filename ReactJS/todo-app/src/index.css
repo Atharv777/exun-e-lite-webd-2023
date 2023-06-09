@@ -1,0 +1,116 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+
+ul {
+  margin: 10px auto;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 20px;
+  width: 475px;
+}
+
+li {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  background-color: #1a1a1a;
+  padding: 10px 20px;
+  border-radius: 20px;
+  color: #fff;
+}
+li > p {
+  word-wrap: break-word;
+  width: 30ch;
+  text-align: start;
+}
+
+li > div {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  width: 475px;
+  padding: 20px;
+  border: 1px solid #1a1a1a;
+  border-radius: 15px;
+}
+
+form > div {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+h2 {
+  font-size: 30px;
+  font-weight: 900;
+  line-height: 125%;
+  margin-bottom: 20px;
+}
+
+textarea {
+  padding: 10px;
+  font-size: 15px;
+  outline: none;
+  border: 1px solid #9d9d9d;
+  border-radius: 10px;
+  background-color: beige;
+}
+
+button {
+  background-color: #1a1a1a;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  color: #fff;
+  font-weight: 300;
+  padding: 5px 12px;
+  border-radius: 7px;
+  transition: all 0.2s linear;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+form button {
+  margin-top: 20px;
+}
+
+#edit {
+  background-color: rgb(76, 76, 255);
+}
+#delete {
+  background-color: rgb(255, 76, 76);
+}
